@@ -1,0 +1,602 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{listings}
+
+\graphicspath{{./imgs}}
+
+\usetheme{Madrid}
+
+\title{Workshop de Programação}
+\author{Rafael \and Arthur \and Thomaz}
+\institute{Prisma Game Lab}
+\logo{\includegraphics[width=.05\textwidth]{logo}}
+\date{\today}
+
+\begin{document}
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+	\frame{\tableofcontents}
+
+	\section{Programação Orientada a Objetos}
+	\frame{\sectionpage}
+
+	\subsection{Objeto}
+	\begin{frame}
+		\frametitle{O que é um objeto?}
+
+		\begin{itemize}
+			\item Um objeto é um elemento do programa que junta dados
+				(atributos como variáveis) e ações sobre esses dados (métodos,
+				funções do objeto).
+
+			\item Objetos são muito utilizados para modelar elementos reais no
+				código, de forma que a estrutura e funcionamento do programa se
+				assemelham a situações do mundo real
+		\end{itemize}
+
+		\begin{block}{Exemplo}
+			Em um jogo o jogador é normalmente representado por um objeto, que
+			possui dados (atributos): vida e coordenadas. Assim como ações
+			(métodos): levar dano e se mover.
+		\end{block}
+	\end{frame}
+
+	\subsection{Classe} % mencionar construtores
+	\begin{frame}
+		\frametitle{Classe}
+
+		\begin{itemize}
+			\item Uma classe nada mais é do que a definição de um objeto, a
+				planta que é usada para construir um objeto (uma instância da
+				classe).
+
+			\begin{definition}
+				Uma "instância" de uma classe é um objeto criado a partir de
+				tal classe. A classe por si só apenas define como o objeto é, e
+				podemos então a usar para criar um objeto que podemos usar no
+				programa.
+
+				Por exemplo, a partir de uma planta (uma classe),
+				podemos construir (instanciar) vários carros
+				(instâncias/objetos) que por mais de terem a mesma estrutura,
+				ainda são diferentes (ex. placas diferentes).
+			\end{definition}
+
+			\item Na classe, são definidos os atributos e métodos de um objeto.
+
+			\item Para organização do código, é boa prática definir classes em
+				arquivos separados no seu projeto, com o nome do arquivo sendo
+				igual ao do objeto.
+		\end{itemize}
+
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{block}{Jogador.cs}
+			\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public class Jogador
+{
+	private int vida;
+	private float pos_x, pos_y;
+
+	public void tomar_dano(int dano) {
+		vida -= dano;
+	}
+
+	public void mover(float x, float y) {
+		pos_x += x;
+		pos_y += y;
+	}
+}
+			\end{lstlisting}
+		\end{block}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{block}{Instanciação}
+			\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+Jogador jogador1 = new Jogador();
+Jogador jogador2 = new Jogador();
+			\end{lstlisting}
+		\end{block}
+	\end{frame}
+
+	\subsection{Atributos} % atributo estático
+	\begin{frame}[fragile]
+		\frametitle{Atributos}
+
+		\begin{block}{Jogador.cs}
+			\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+private int vida;
+private float pos_x, pos_y;
+			\end{lstlisting}
+		\end{block}
+
+		\begin{itemize}
+			\item Atributos são os dados definidos na classe do objeto.
+
+			\item Atributos nada mais são do que variáveis definidas na classe.
+
+			\item Valores de atributos de diferentes instâncias de uma classe,
+				por padrão, são independentes uns dos outros.
+		\end{itemize}
+	\end{frame}
+
+	\subsection{Métodos}
+	\begin{frame}[fragile]
+		\frametitle{Métodos}
+
+		\begin{block}{Jogador.cs}
+			\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public void tomar_dano(int dano) {
+	vida -= dano;
+}
+
+public void mover(float x, float y) {
+	pos_x += x;
+	pos_y += y;
+}
+			\end{lstlisting}
+		\end{block}
+
+		\begin{itemize}
+			\item Métodos representam ações de um objeto.
+
+			\item São como funções mas que são definidas dentro de uma classe e
+				são diretamente ligadas à uma instância.
+
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{block}{Chamada de método}
+			\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+jogador1.tomar_dano(5);
+jogador2.mover(5.0f, 1.2f);
+			\end{lstlisting}
+		\end{block}
+	\end{frame}
+
+	\subsection{Encapsulamento} % boas práticas
+	\begin{frame}[fragile]
+		\frametitle{Encapsulamento}
+		\begin{block}{Exemplo}
+			\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public class Foo {}
+private int bar;
+public void baz();
+			\end{lstlisting}
+		\end{block}
+
+		\begin{itemize}
+			\item Podemos controlar quais partes do programa conseguem
+				interagir com quais membros de um objeto.
+
+			\item Membros públicos (public) podem ser acessados diretamente por
+				código de fora da classe
+
+			\item Membros privados (private) podem ser acessados apenas de
+				dentro da própria classe.
+		\end{itemize}
+
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{alertblock}{Código inválido}
+			\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+jogador1.vida; // vida private
+			\end{lstlisting}
+		\end{alertblock}
+
+		\begin{block}{Código válido}
+			\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+jogador1.mover(0.0f, 0.0f); // mover public
+			\end{lstlisting}
+		\end{block}
+	\end{frame}
+
+	\subsection{Herança} % Exemplo
+	\begin{frame}
+		\frametitle{Herança}
+
+		\begin{itemize}
+			\item Um dos grandes poderes da POO é construir novos objetos a
+				partir de outros.
+
+			\item Código que seria comum (atributos e/ou métodos comuns) entre
+				classes pode ser posto em uma classe só, e outras classes podem
+				"herdar" tais valores.
+		\end{itemize}
+
+		\begin{block}{Exemplo}
+			Se no nosso jogo tivermos dois animais, por exemplo Gato e
+			Cachorro, estes ainda tem muitas coisas em comum: Ambos de idade,
+			nome, comem e dormem. Porém, o cachorro late e o gato mia.
+		\end{block}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{block}{Exemplo}
+			\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public class Animal {
+	public int idade;
+	public string nome;
+
+	public void comer() {...}
+	public void dormir() {...}
+}
+
+public class Gato : Animal {
+	public void miar() {...}
+}
+
+public class Cachorro : Animal {
+	public void latir() {...}
+}
+			\end{lstlisting}
+		\end{block}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{block}{Exemplo}
+			\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+Gato gato = new Gato();
+gato.miar();
+gato.comer();
+gato.dormir();
+			\end{lstlisting}
+		\end{block}
+	\end{frame}
+
+	\section{C\#}
+	\frame{\sectionpage}
+
+	\subsection{Tipagem e Variáveis} % conversão de tipos
+	\begin{frame}[fragile]
+		\frametitle{Tipagem e Variáveis}
+
+		C\# é uma linguagem \textbf{tipada}, isso significa que precisamos
+		dizer o tipo da informação que uma variável guarda. Isso é diferente de
+		linguagens como Python, chamadas de \textbf{dinâmicas}.
+
+		A principio tipagem pode parecer não ter vantagens sobre linguagens
+		dinâmicas, porém tipos deixam mais claro o que uma variável guarda e
+		impedem erros como passar o tipo errado para uma função.
+
+		\begin{columns}
+			\column{0.49\textwidth}
+			\begin{block}{C\#}
+				\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+int numero = 1;
+string nome = "Fulano";
+float preco = 12.50f;
+double altura = 1.8;
+				\end{lstlisting}
+			\end{block}
+			\column{0.45\textwidth}
+			\begin{block}{Python}
+				\begin{lstlisting}[language=Python,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+numero = 1
+nome = "Fulano"
+preco = 12.50
+altura = 1.8
+				\end{lstlisting}
+			\end{block}
+		\end{columns}
+
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Conversão de tipos}
+
+		Como C\# é uma linguagem tipada, se criarmos uma variável como int, esta
+		apenas pode receber valores int. Se quisermos guardar um float em uma
+		variável int, precisamos converter o valor para int.
+
+		\begin{columns}
+			\column{0.49\textwidth}
+			\begin{block}{C\#}
+				\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+int numero = 1;
+numero = (int)3.5f;
+				\end{lstlisting}
+			\end{block}
+			\column{0.45\textwidth}
+			\begin{block}{Python}
+				\begin{lstlisting}[language=Python,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+numero = 1
+numero = 3.5
+				\end{lstlisting}
+			\end{block}
+		\end{columns}
+
+		\begin{alertblock}{Conversão}
+			Atenção, a conversão de float para int faz o número perder as suas
+			casas decimais, então o valor em numero, no C\#, agora é 3.
+		\end{alertblock}
+
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Tipos comuns no C\#}
+
+		\begin{description}
+			\item[bool] Valor lógico booleano, true ou false.
+			\item[int] Número inteiro de -2,147,483,648 à 2,147,483,647.
+			\item[long] Número inteiro de -9,223,372,036,854,775,808 à
+				9,223,372,036,854,775,807.
+			\item[char] Letra única ('a', 'b', 'c', ...).
+			\item[string] Cadeia de chars (letras), texto ("foo").
+		\end{description}
+
+		Objetos são tipos também! Portanto, se você criou um objeto "Jogador",
+		Jogador é um tipo.
+	\end{frame}
+
+	\subsection{Aritmética}
+	\begin{frame}
+		\frametitle{Aritmética}
+
+		Aritmética no C\# é bem simples e muito similar a Python.
+
+		\begin{description}
+			\item[$++a$] Incrementa valor de a.
+			\item[$--a$] Decrementa valor de a.
+			\item[a + b] Adição.
+			\item[a - b] Subtração.
+			\item[a * b] Multiplicação.
+			\item[a / b] Divisão.
+			\item[a \% b] Resto.
+		\end{description}
+	\end{frame}
+
+	\subsection{Controle de Fluxo: Condicionais e Loops}
+	\begin{frame}[fragile]
+		\frametitle{if/else}
+
+		No C\# podemos decidir caminhos para o código de acordo com condições.
+		Assim como no Python, temos estruturas como o if/else.
+
+		\begin{columns}
+			\column{0.49\textwidth}
+			\begin{block}{C\#}
+				\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+if (n > 0) {
+	--n;
+} else if (n == 0) {
+	n = 1;
+} else {
+	++n;
+}
+				\end{lstlisting}
+			\end{block}
+			\column{0.45\textwidth}
+			\begin{block}{Python}
+				\begin{lstlisting}[language=Python,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+if n > 0:
+	n -= 1
+elif n == 0:
+	n = 1
+else:
+	n += 1
+				\end{lstlisting}
+			\end{block}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{switch}
+
+		No C\# também temos uma estrutura chamada "switch/case", que nos
+		permite testar valores específicos (ou seja, igualdade).
+
+		\begin{columns}
+			\column{0.49\textwidth}
+			\begin{block}{C\#}
+				\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+switch(n) {
+	case 0:
+		++m;
+		break;
+	case 1:
+		--m;
+		break;
+	default:
+		m = 0;
+		break;
+}
+				\end{lstlisting}
+			\end{block}
+			\column{0.45\textwidth}
+			\begin{block}{Python}
+				\begin{lstlisting}[language=Python,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+if n == 0:
+	m += 1
+elif n == 1:
+	m -= 1
+else:
+	m = 0
+				\end{lstlisting}
+			\end{block}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{while}
+
+		Quando queremos repetir código até algo ser verdadeiro, podemos usar o
+		while.
+
+		Atenção que a condição é checada antes da execução do loop. Portanto,
+		se a condição for falsa desde o começo, o loop não será executado nem
+		uma vez.
+
+		\begin{columns}
+			\column{0.49\textwidth}
+			\begin{block}{C\#}
+				\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+while (n > 2) {
+	n /= 2;
+}
+				\end{lstlisting}
+			\end{block}
+			\column{0.45\textwidth}
+			\begin{block}{Python}
+				\begin{lstlisting}[language=Python,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+while n > 2:
+	n /= 2
+				\end{lstlisting}
+			\end{block}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{do while}
+
+		Se quisermos que a corpo do while seja executado pelo menos uma vez,
+		podemos usar o do/while, que checa a condição apenas depois da execução
+		de cada iteração.
+
+		\begin{columns}
+			\column{0.49\textwidth}
+			\begin{block}{C\#}
+				\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+do {
+	n /= 2;
+} while (n > 2);
+				\end{lstlisting}
+			\end{block}
+			\column{0.45\textwidth}
+			\begin{block}{Python}
+				\begin{lstlisting}[language=Python,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+n /= 2
+while n > 2:
+	n /= 2
+				\end{lstlisting}
+			\end{block}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{for loop}
+
+		No C\# o for loop é bem diferente do Python. O for loop no C\# é mais versátil, e pode ser visto apenas como um "açúcar" sintático para o while.
+
+
+			\begin{block}{for}
+				\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+for (int i = 0; i < 10; ++i) {
+	// corpo
+}
+				\end{lstlisting}
+			\end{block}
+			\begin{block}{while}
+				\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+int i = 0;
+while (i < 10) {
+	// corpo
+	++i;
+}
+				\end{lstlisting}
+			\end{block}
+	\end{frame}
+
+	\subsection{Funções}
+	\begin{frame}[fragile]
+		\frametitle{Funções}
+		Funções no C\#, assim como variáveis são tipadas. O tipo da função representa o tipo do seu retorno, sendo "void" o especial para funções que retornam nada.
+
+			\begin{block}{Sintaxe da função}
+				\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+ecapsulamento tipo nome(parametros) {
+	corpo
+	return ...;
+}
+				\end{lstlisting}
+			\end{block}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Exemplo: Função que dobra int}
+			\begin{block}{C\#}
+				\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public int dobra(int n) {
+	return n * 2;
+}
+				\end{lstlisting}
+			\end{block}
+
+			\begin{block}{Python}
+				\begin{lstlisting}[language=Python,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+def dobra(n):
+	return n * 2
+				\end{lstlisting}
+			\end{block}
+	\end{frame}
+
+	\subsection{Coleções: Arrays, Listas}
+	\begin{frame}
+		\frametitle{Coleções}
+
+		No Python quando queremos guardar mais de um elemento em uma variável,
+		usamos listas. Porém no C\# temos duas principais opções:
+
+		\begin{description}
+			\item[Array] Coleção de tamanho fixo, mas mais simples e mais eficiente
+			\item[Lista] Coleção de tamanho dinâmico, mas um pouco mais complexa e menos eficiente
+		\end{description}
+
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Array}
+
+		Declaração de um array de 10 ints:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+int[] arr = new int[10];
+		\end{lstlisting}
+
+		Ler elemento:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+int n = arr[5];
+		\end{lstlisting}
+
+		Modificar elemento:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+arr[6] = n;
+		\end{lstlisting}
+
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Lista}
+
+		Criando uma lista de ints:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+List<int> lst = new List<int>();
+		\end{lstlisting}
+
+		Adicionar elemento:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+lst.Add(n);
+		\end{lstlisting}
+
+		Ler elemento:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+int n = lst[0];
+		\end{lstlisting}
+
+	\end{frame}
+
+	\subsection{Eventos}
+
+	\section{Unity}
+	\subsection{Monobehaviour}
+	\subsection{Input System}
+	\subsection{Scriptable Objects (SOs)}
+	\subsection{Corrotinas}
+\end{document}
+
