@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8847309300104295957}
   - component: {fileID: 8847309300104295958}
-  - component: {fileID: -3221558510672325042}
   - component: {fileID: 1345935841}
   - component: {fileID: 4117918021313263954}
   m_Layer: 0
@@ -86,24 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-3221558510672325042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8847309300104295959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce6d01b689ed5b64a8fee5ff56064999, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  damage: 0
-  value: 0
-  speed: 0
-  pointPrefab: {fileID: 2963563823592635046, guid: ecd179e6a89d3ce4388441c13e9a4f79, type: 3}
-  hpBar: {fileID: 3152103845515558084}
 --- !u!50 &1345935841
 Rigidbody2D:
   serializedVersion: 4
@@ -261,14 +242,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 174556469194592840, guid: c974242b64bcd384b9983bd91cd56cec, type: 3}
   m_PrefabInstance: {fileID: 3013650940095662684}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3152103845515558084 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 174556469242656408, guid: c974242b64bcd384b9983bd91cd56cec, type: 3}
-  m_PrefabInstance: {fileID: 3013650940095662684}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 652cbf4471f452349b468573b5dea4e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
