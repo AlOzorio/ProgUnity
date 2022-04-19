@@ -306,7 +306,7 @@ MonoBehaviour:
   shotSpeed: 15
   shotsPerSecond: 3
   hpBar: {fileID: 802435214}
-  damage: 100
+  damage: 150
   health: 100
 --- !u!114 &364832511
 MonoBehaviour:

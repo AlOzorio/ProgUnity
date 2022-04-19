@@ -41,8 +41,8 @@ public class EnemyController : MonoBehaviour
     {
         if (other.tag == "shot")
         {
-            Destroy(other.gameObject);
             TakeDamage(playerController.damage);
+            Destroy(other.gameObject);
         }
         if (other.tag == "wall")
         {
