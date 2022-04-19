@@ -32,13 +32,25 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector2(transform.position.x, -4);
         }
-
     }
 
     public void Move(InputAction.CallbackContext context)
     {
         float _direction = context.ReadValue<float>();
         rb.velocity = _direction * speed * Vector2.up;
+    }
+
+    public void Shoot(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            SingleShot();
+            StartCoroutine(ShootCoroutine());
+        }
+        else if (!context.control.IsPressed())
+        {
+            StopAllCoroutines();
+        }
     }
 
     public void TakeDamage(int dmg)
@@ -52,21 +64,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Shoot(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            SingleShot();
-        }
-        if (context.control.IsPressed())
-        {
-            StartCoroutine(ShootCoroutine());
-        }
-        else{
-            StopAllCoroutines();
-        }
-    }
-
     private void SingleShot()
     {
         var temp = Instantiate(shot, transform.position, transform.rotation);
@@ -74,6 +71,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = transform.up * shotSpeed;
         Destroy(temp, 2f);
     }
+    
     private IEnumerator ShootCoroutine()
     {
         while (true)
