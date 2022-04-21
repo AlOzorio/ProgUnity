@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f812a4d22dbf8f498f74f7fbd908b07, type: 3}
-  m_Name: Megazord
+  m_Script: {fileID: 11500000, guid: 1f3d6fa9fc7c5ff4783e4838d184a03b, type: 3}
+  m_Name: Medium
   m_EditorClassIdentifier: 
-  sprite: {fileID: -4006753896521054394, guid: 278b61a9028b9194ba3d4eeadb00f4fb, type: 3}
-  health: 1000
-  damage: 33
-  value: 100
-  speed: 12
+  sprite: {fileID: -5321333318776533782, guid: f680e5047c3880e4285d455c7e341a44, type: 3}
+  hp: 400
+  damage: 100
+  reward: 20
+  speed: 1.5

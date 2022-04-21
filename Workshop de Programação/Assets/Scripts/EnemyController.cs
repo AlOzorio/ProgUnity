@@ -4,73 +4,82 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public int health;
-    public int damage;
-    public int value;
-    public int speed;
-    public GameObject pointPrefab;   
-    public HealthBar hpBar;
-    private SpriteRenderer sprRend;
-    private Vector2 sprSize;
-    private PlayerController playerController;
+    [SerializeField] private HealthBarController hpBar;
+    [SerializeField] private GameObject pointPrefab;
+
+    private Sprite sprite;
+    private int hp;
+    private int damage;
+    private int reward;
+    private float speed;
+
+    private Rigidbody2D rb;
+    private BoxCollider2D bc;
+    private SpriteRenderer sr;
+    private Vector2 srSize;
+    private PlayerController pc;
 
     private void Awake()
     {
-        playerController = FindObjectOfType<PlayerController>();
-        sprRend = GetComponent<SpriteRenderer>();
-        sprSize = sprRend.size;
+        pc = FindObjectOfType<PlayerController>();
+        bc = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        srSize = sr.size;
     }
+
     private void Start()
     {
-        var rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.up * (float) speed/10f;
+        rb.velocity = speed * Vector2.left;
     }
-    public void FillValues(Enemy properties)
+
+    public void FillValues(EnemySO enemySO)
     {
-        var renderer = GetComponent<SpriteRenderer>();
-        renderer.sprite = properties.sprite;
-        GetComponent<BoxCollider2D>().size = renderer.sprite.bounds.size;
-        health = properties.health;
-        damage = properties.damage;
-        value = properties.value;
-        speed = properties.speed;
-        hpBar.SetMaxHealth(health);
+        sr.sprite = enemySO.sprite;
+        bc.size = enemySO.sprite.bounds.size;
+
+        hp = enemySO.hp;
+        damage = enemySO.damage;
+        reward = enemySO.reward;
+        speed = enemySO.speed;
+        hpBar.SetMaxHealth(hp);
+    }
+
+    private IEnumerator TakeDamage(int dmg)
+    {
+        hp -= dmg;
+        hpBar.SetHealth(hp);
+
+        if (hp <= 0)
+        {
+            GameObject point = Instantiate(pointPrefab, transform.position, Quaternion.identity);
+            var pointController = point.GetComponent<PointController>();
+            pointController.points = reward;
+            Destroy(gameObject);
+        }
+
+        //Animate Damage
+        sr.size = srSize * 0.8f;
+        yield return new WaitForSeconds(0.1f);
+        sr.size = srSize;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "shot")
+        switch (other.tag)
         {
-            TakeDamage(playerController.damage);
-            Destroy(other.gameObject);
-        }
-        if (other.tag == "wall")
-        {
-            playerController.TakeDamage(damage);
-            Destroy(gameObject);
-        }
-    }
+            case "Bullet":
+                Destroy(other.gameObject);
+                StartCoroutine(TakeDamage(pc.playerDamage));
+                break;
 
-    private void TakeDamage(int dmg)
-    {
-        StartCoroutine(AnimateDamage());
-        health -= dmg;
-        hpBar.SetHealth(health);
-        if (health <= 0)
-        {
-            //Generate PointObject
-            GameObject point = Instantiate(pointPrefab, transform.position, Quaternion.identity);
-            var rb = point.GetComponent<Rigidbody2D>();
-            rb.velocity = transform.up * (float) speed/10f;
-            point.GetComponent<Point>().points = value;
-            Destroy(gameObject);
-        }
-    }
+            case "Wall":
+                pc.TakeDamage(damage);
+                Destroy(gameObject);
+                break;
 
-    private IEnumerator AnimateDamage()
-    {
-        sprRend.size = sprSize * 0.8f;
-        yield return new WaitForSeconds(0.1f);
-        sprRend.size = sprSize;
+            default:
+                break;
+        }
     }
 }

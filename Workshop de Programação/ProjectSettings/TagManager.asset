@@ -4,9 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - shot
-  - point
-  - wall
+  - Point
+  - Enemy
+  - Wall
+  - Bullet
   layers:
   - Default
   - TransparentFX

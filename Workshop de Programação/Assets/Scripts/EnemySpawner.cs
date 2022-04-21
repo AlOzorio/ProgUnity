@@ -4,33 +4,38 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private float spawnTime;
+    [SerializeField] private float cooldown;
+    [SerializeField] private float minCooldown;
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private List<Enemy> enemyList;
+    [SerializeField] private List<EnemySO> enemyList;
+
     private void Start()
     {
-        StartCoroutine(Spawner());
-        StartCoroutine(Difficulty());
+        StartCoroutine(SpawnerCoroutine());
+        StartCoroutine(DifficultyCoroutine());
     }
 
-    private IEnumerator Spawner()
+    private IEnumerator SpawnerCoroutine()
     {
-        while (true)
+        while(true)
         {
-            yield return new WaitForSeconds(spawnTime);
+            yield return new WaitForSeconds(cooldown);
 
-            GameObject enemy = Instantiate(enemyPrefab, new Vector3 (8, (int) Random.Range(-4,4), 0), transform.rotation * Quaternion.Euler (0f, 0f, 90f));
-            int index = Random.Range (0, enemyList.Count);
+            Vector3 position = new Vector3(8, (int) Random.Range(-4,5), 0);
+            int index = Random.Range(0, enemyList.Count);
+
+            GameObject enemy = Instantiate(enemyPrefab, position, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
             enemy.GetComponent<EnemyController>().FillValues(enemyList[index]);
         }
     }
 
-    private IEnumerator Difficulty()
+    private IEnumerator DifficultyCoroutine()
     {
-        while (spawnTime > 1.5f)
+        while (cooldown > minCooldown)
         {
-            yield return new WaitForSeconds(spawnTime*5);
-            spawnTime *= 0.9f;
+            yield return new WaitForSeconds(cooldown);
+            cooldown *= 0.975f;
         }
+        cooldown = minCooldown;
     }
 }

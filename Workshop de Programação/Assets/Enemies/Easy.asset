@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f812a4d22dbf8f498f74f7fbd908b07, type: 3}
-  m_Name: Klingon
+  m_Script: {fileID: 11500000, guid: 1f3d6fa9fc7c5ff4783e4838d184a03b, type: 3}
+  m_Name: Easy
   m_EditorClassIdentifier: 
-  sprite: {fileID: -5321333318776533782, guid: f680e5047c3880e4285d455c7e341a44, type: 3}
-  health: 600
-  damage: 15
-  value: 10
-  speed: 18
+  sprite: {fileID: 4624901212220815908, guid: 125d5be502cbe3a418c97ea911b93155, type: 3}
+  hp: 200
+  damage: 50
+  reward: 10
+  speed: 2

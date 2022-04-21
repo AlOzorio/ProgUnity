@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Text scoreText;
-    [SerializeField] private int score;
+    private int score;
 
-    public void AddPoints(int points)
+    public void AddScore(int amount)
     {
-        score += points;
+        score += amount; 
         scoreText.text = score.ToString();
     }
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }    
 }

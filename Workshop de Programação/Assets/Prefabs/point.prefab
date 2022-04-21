@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 2963563823592635047}
   - component: {fileID: 2963563823592635045}
   - component: {fileID: 2963563823592635050}
-  - component: {fileID: 2963563823592635051}
+  - component: {fileID: 4636874461001233394}
   m_Layer: 0
   m_Name: point
-  m_TagString: point
+  m_TagString: Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,7 +122,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2963563823592635051
+--- !u!114 &4636874461001233394
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +131,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2963563823592635046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98a5731c57251074e95bec186f3d86b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b880a4832690e04b9c1b5f79eed71bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   points: 0
+  speed: 1

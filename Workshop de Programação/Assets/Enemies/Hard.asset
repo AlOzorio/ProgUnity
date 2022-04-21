@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f812a4d22dbf8f498f74f7fbd908b07, type: 3}
-  m_Name: Asmoranomardicadaistinaculdacar
+  m_Script: {fileID: 11500000, guid: 1f3d6fa9fc7c5ff4783e4838d184a03b, type: 3}
+  m_Name: Hard
   m_EditorClassIdentifier: 
-  sprite: {fileID: 4624901212220815908, guid: 125d5be502cbe3a418c97ea911b93155, type: 3}
-  health: 200
-  damage: 10
-  value: 25
-  speed: 25
+  sprite: {fileID: -4006753896521054394, guid: 278b61a9028b9194ba3d4eeadb00f4fb, type: 3}
+  hp: 600
+  damage: 250
+  reward: 30
+  speed: 1
