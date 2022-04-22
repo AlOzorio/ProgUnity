@@ -592,8 +592,170 @@ int n = lst[0];
 	\end{frame}
 
 	\subsection{Eventos}
+	\begin{frame}
+		\frametitle{O que são Eventos}
+		\begin{itemize}
+			\item Forma de permitir que parte do programa avise outra parte do
+				programa que algo aconteceu.
+		\end{itemize}
+
+		Exemplo de como acontece
+
+		\begin{enumerate}
+			\item Classe se inscreve em um evento, selecionando uma função que
+				será chamada ao acontecer.
+
+			\item Evento acontece, notificando todas as classes inscritas
+
+			\item Classe recebe a notificação e a função inscrita é executada.
+
+			\item Programa acaba ou Classe se desinscreve do evento.
+		\end{enumerate}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Delegate}
+
+		\begin{itemize}
+			\item No C\#, como tudo é tipado, precisamos dizer o "tipo" de
+				funções que um evento aceita. Com isso, um "delegate" nada mais
+				é do que um tipo que representa uma referência à um método.
+
+			\item Podemos então tratar de métodos como se fossem "valores" e
+				atribuí-los a variáveis e passar como argumentos para outras
+				funções.
+		\end{itemize}
+
+		Delegates seguem o modelo:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+<encaps> delegate <retorno> nome(<parametros>)
+		\end{lstlisting}
+
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Exemplo de Delegate}
+
+		Digamos que queremos fazer uma função matemática que recebe uma
+		operação (soma, subtração, divisão ou multiplicação), aplica sobre dois
+		números e retorna o resultado. As operações definidas como:
+
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public int som(int a, int b) { return a + b; }
+public int sub(int a, int b) { return a - b; }
+public int mul(int a, int b) { return a * b; }
+public int div(int a, int b) { return a / b; }
+		\end{lstlisting}
+
+		Podemos definir um "tipo" pra essas funções e então a função que recebe
+		outra função e os números:
+
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public delegate int TipoOp(int x, int y);
+public executarOp(TipoOp op, int a, int b) {
+	return op(a, b);
+}
+
+executarOp(som, 5, 2) // -> 7
+		\end{lstlisting}
+
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Eventos}
+
+		\begin{itemize}
+			\item Digamos que sempre que nosso player leva dano, várias coisas
+				precisam acontecer no jogo, por exemplo: Rodar uma animação e
+				atualização a barra de vida.
+
+			\item Poderíamos diretamente chamar tais ações, mas estariamos
+				dando responsabilidades à classe player que não fazem muito
+				sentido, e em sistemas mais complexos talvez deixe tudo mais
+				dificil de atualizar
+
+			\item Podemos então criar um evento que é disparado sempre que o
+				player leva dano, e todas as classes interessadas podem se
+				inscrever nesse evento. O Player então apenas precisará
+				disparar o evento, sem saber quem está inscrito.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Eventos}
+
+		\begin{itemize}
+			\item Cada Classe que se inscreverá terá um método que será chamado
+				quando o evento acontecer. Esse método receberá por parâmetros
+				informações relacionadas.
+
+			\item Todos esses métodos precisam respeitar o delegate do evento,
+				já que o evento chamará todas os métodos inscritos, e para isso
+				precisa saber os tipos.
+
+			\item Portanto precisamos definir um delegate(tipo) pro nosso
+				evento, e criar o evento em si, para que outras classes possam
+				se inscrever
+		\end{itemize}
+
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Criação}
+
+		Exemplo de uma função da classe da barra de vida:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public void AtualizarBarra(int vida_nova) { ... }
+		\end{lstlisting}
+
+		Delegate do mesmo tipo:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public delegate void PDamaged(int vida);
+		\end{lstlisting}
+
+		Definição de evento usando o delegate:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public event PDamaged OnPlayerDamaged;
+		\end{lstlisting}
+
+		Inscrição em evento de uma Classe:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+jogador.PDamaged += AtualizarBarra;
+		\end{lstlisting}
+
+		Desinscrição em evento de uma Classe:
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+jogador.PDamaged -= AtualizarBarra;
+		\end{lstlisting}
+
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public class Jogador
+{
+    private int vida;
+    private float pos_x, pos_y;
+
+    public delegate void PDamaged(int vida);
+    public event PDamaged OnPlayerDamaged;
+
+    public void tomar_dano(int dano) {
+        vida -= dano;
+        OnPlayerDamaged?.Invoke(vida);
+    }
+
+    public void mover(float x, float y) {
+        pos_x += x;
+        pos_y += y;
+    }
+}
+		\end{lstlisting}
+	\end{frame}
 
 	\section{Unity}
+	\frame{\sectionpage}
+
 	\subsection{Monobehaviour}
 	\subsection{Input System}
 	\subsection{Scriptable Objects (SOs)}
