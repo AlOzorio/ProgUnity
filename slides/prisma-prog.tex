@@ -757,8 +757,140 @@ public class Jogador
 	\frame{\sectionpage}
 
 	\subsection{Monobehaviour}
+	\begin{frame}
+		\frametitle{O que é Monobehaviour}
+		\begin{itemize}
+			\item No Unity, Monobehaviour representa a base de qualquer
+				"Objeto" dentro do seu jogo
+
+			\item Todos os scripts do Unity que estão diretamente no jogo,
+				herdam de Monobehaviour
+
+			\item Monobehaviours não podem ser criados dentro do código usando
+				"new"
+
+			\item Monobehaviour dá features básicas ao seu objeto que o
+				permitem se "comunicar" com a Unity e interagir com outros
+				Monobehaviours.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Métodos de Ciclo de vida}
+
+		\begin{itemize}
+			\item Monobehaviours possuem alguns métodos pre-determinadas que
+				são chamadas sempre em certas situações em seu ciclo de vida
+
+			\item Quando objeto é criado: Awake() $\rightarrow$ Start()
+
+			\item Quando objeto é ativado: OnEnable()
+
+			\item Todos os Frames: FixedUpdate() $\rightarrow$ Update() $\rightarrow$ LateUpdate()
+
+			\item Quando objeto é desativado: OnDisable()
+
+			\item Quando item é destruído: OnDestroy()
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+public class Jogador : MonoBehaviour
+{
+	private int vida;
+	private float pos_x, pos_y;
+
+	...
+
+	private void Awake() {
+		vida = 3;
+		pos_x = 0;
+		pos_y = 0;
+	}
+
+	private void Update() {
+		if (jogador_esta_em_lava())
+			vida = 0;
+	}
+}
+		\end{lstlisting}
+	\end{frame}
+
 	\subsection{Input System}
+
 	\subsection{Scriptable Objects (SOs)}
+	\begin{frame}
+		\frametitle{Scripable Objects}
+
+		\begin{itemize}
+			\item Programar já é dificil pro programador, imagine pra GDs,
+				Artistar, etc.
+
+			\item Como programador você pode usar SOs para deixar o jogo tanto
+				mais fácil para você quanto mais acessível aos outros.
+
+			\item SOs permitem você criar uma forma de colocar informações
+				novas no jogo sem mexer no código
+
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Scripable Objects}
+
+		\begin{itemize}
+			\item SOs são definidos a partir de uma classe que herda de
+				ScriptableObject
+
+			\item Na mesma clsse são definidos os campos do scriptable object
+
+			\item Também é possível definir uma forma de criar o SO direto do
+				Unity.
+
+			\item SOs podem depois então ser associados a outros objetos no
+				inspetor e seus campos acessados
+
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+using UnityEngine;
+using UnityEngine.Localization;
+
+[CreateAssetMenu(fileName = "Magnet",
+	menuName = "ScriptableObjects/Magnet")]
+public class MagnetSO : ScriptableObject
+{
+	public LocalizedString title;
+	public LocalizedString description;
+	public MagnetType type;
+	public MagnetEffect[] effects
+		= new MagnetEffect[2];
+	public Sprite sprite;
+}
+		\end{lstlisting}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Exemplo}
+		\begin{columns}
+			\column{0.5\textwidth}
+			\includegraphics[scale=0.3]{so-rightclick}
+
+			\column{0.5\textwidth}
+			\includegraphics[scale=0.6]{so-inspector}
+			\includegraphics[scale=0.6]{so-folder}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\begin{center}
+			\includegraphics{so-monobehaviour}
+		\end{center}
+	\end{frame}
+
 	\subsection{Corrotinas}
 \end{document}
 
