@@ -23,10 +23,18 @@ public class PointController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        switch (other.tag)
         {
-            gameManager.AddScore(points);
-            Destroy(gameObject);
+            case "Player":
+                gameManager.AddScore(points);
+                Destroy(gameObject);
+                break;
+            case "Wall":
+                Destroy(gameObject, 3f);
+                break;
+            default:
+                break;
         }
+
     }
 }
