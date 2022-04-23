@@ -818,6 +818,35 @@ public class Jogador : MonoBehaviour
 	\end{frame}
 
 	\subsection{Input System}
+	\begin{frame}
+		\frametitle{Input System}
+
+		\begin{itemize}
+			\item Forma de tratar inputs como eventos
+
+			\item Não é necessário (e não se deve) ficar perguntando todo frame
+				se uma tecla está sendo apertada, o Input System te avisa
+
+			\item Usamos Input Actions para definir "actions" (similar a
+				eventos) e seus bindings (teclas que causam evento)
+
+			\item Podemos então fazer actions dispararem eventos do C\# que
+				podem ser tratados como antes mostrado.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Instalação}
+
+		\begin{columns}
+			\column{0.5\textwidth}
+			\includegraphics[width=\textwidth]{input-install-1}
+			\includegraphics[width=\textwidth]{input-install-2}
+
+			\column{0.5\textwidth}
+			\includegraphics[width=\textwidth]{input-install-3}
+		\end{columns}
+	\end{frame}
 
 	\subsection{Scriptable Objects (SOs)}
 	\begin{frame}
@@ -892,5 +921,60 @@ public class MagnetSO : ScriptableObject
 	\end{frame}
 
 	\subsection{Corrotinas}
+	\begin{frame}
+		\frametitle{Corrotinas}
+		\begin{itemize}
+			\item Muitas vezes precisamos executar código que precisa de várias
+				frames, como uma animação de movimentação ou dano.
+
+			\item Quando chamamos um método comum, ele faz toda a sua
+				computação e retorna
+
+			\item Corrotinas são métodos especiais que podem pausar sua
+				execução e retornar controle pro unity, mas continuar
+				exatamente onde pararam na próxima chamada
+
+			\item Com corrotinas podemos executar facilmente computações que
+				duram várias frames sem parar o resto jogo, podemos até definir
+				um tempo até a próxima execução
+
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Corrotinas}
+		\begin{itemize}
+			\item Corrotinas são métodos que retornam o tipo "IEnumerator"
+
+			\item Para pausar corrotinas, em vez de apenas usar "return",
+				usamos "yield return null;"
+
+			\item Se quisermos pausar a execução por n segundos, podemos usar
+				"yield return new WaitForSeconds(n);"
+
+			\item por causa da forma especial de como Corrotinas funcionam, não
+				podemos as chamar como normalmente, mas com o método
+				"StartCoroutine(CorrotinaExemplo());"
+
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Exemplo}
+		Corrotina que spawna um novo inimigo a cada 5 segundos.
+		\begin{lstlisting}[language=Java,basicstyle=\ttfamily,keywordstyle=\color{blue}]
+IEnumerator SpawnEnemies() {
+    while(true) {
+        SpawnNewEnemy();
+        yield return new WaitForSeconds(5.0f);
+    }
+}
+
+...
+private void Update() {
+    StartCoroutine(SpawnEnemies());
+}
+		\end{lstlisting}
+	\end{frame}
 \end{document}
 
