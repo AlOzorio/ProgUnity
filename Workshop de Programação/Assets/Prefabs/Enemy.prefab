@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8847309300104295958}
   - component: {fileID: 1345935841}
   - component: {fileID: 4117918021313263954}
+  - component: {fileID: 8677552141580994002}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,6 +133,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
+--- !u!114 &8677552141580994002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8847309300104295959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6d01b689ed5b64a8fee5ff56064999, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpBar: {fileID: 3629470918044801241}
+  pointPrefab: {fileID: 2963563823592635046, guid: ecd179e6a89d3ce4388441c13e9a4f79, type: 3}
 --- !u!1001 &3013650940095662684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,6 +242,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: hpCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 174556469194592843, guid: c974242b64bcd384b9983bd91cd56cec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 174556469194592886, guid: c974242b64bcd384b9983bd91cd56cec, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 174556469242656410, guid: c974242b64bcd384b9983bd91cd56cec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 174556469388260298, guid: c974242b64bcd384b9983bd91cd56cec, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -242,3 +269,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 174556469194592840, guid: c974242b64bcd384b9983bd91cd56cec, type: 3}
   m_PrefabInstance: {fileID: 3013650940095662684}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3629470918044801241 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1985202336758715013, guid: c974242b64bcd384b9983bd91cd56cec, type: 3}
+  m_PrefabInstance: {fileID: 3013650940095662684}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b2f9c19fc27c8445b612e117771de07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
