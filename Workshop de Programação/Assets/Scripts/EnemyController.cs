@@ -59,8 +59,10 @@ public class EnemyController : MonoBehaviour
         }
 
         //Animate Damage
+        sr.color = Color.red;
         sr.size = srSize * 0.8f;
         yield return new WaitForSeconds(0.1f);
+        sr.color = Color.white;
         sr.size = srSize;
     }
 
